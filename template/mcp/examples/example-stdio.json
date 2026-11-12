@@ -1,0 +1,11 @@
+{
+  "id": "example-stdio",
+  "example": true,
+  "enabledByDefault": false,
+  "transport": "stdio",
+  "command": "fictional-mcp-server",
+  "argv": ["--workspace", {"source": "local-value", "name": "EXAMPLE_WORKSPACE"}],
+  "env": {"EXAMPLE_TOKEN": {"source": "environment", "name": "EXAMPLE_TOKEN"}},
+  "dependencies": ["Fictional executable for documentation only; do not install."],
+  "requirements": []
+}

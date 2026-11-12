@@ -1,0 +1,11 @@
+{
+  "id": "example-http",
+  "example": true,
+  "enabledByDefault": false,
+  "transport": "streamable-http",
+  "url": "https://example.invalid/mcp",
+  "auth": "headers",
+  "headers": {"Authorization": {"source": "local-secret", "name": "EXAMPLE_AUTH_HEADER"}},
+  "dependencies": [],
+  "requirements": ["Fictional endpoint; do not connect."]
+}
