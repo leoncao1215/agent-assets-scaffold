@@ -29,7 +29,10 @@ owner handles each shared physical directory/configuration section, including
 aliases or mounts referring to the same target. Resolve overlaps before dependent
 writes. Different source repositories do not isolate shared user skill directories.
 Do not silently edit another client's settings merely because they are writable.
-For supported skills loaders, use one physical shared-root installation with many
+For native packages/catalogs, keep the manager as the sole cache writer and
+follow [native-distribution.md](native-distribution.md); file locks do not protect
+its processes or background refresh. Preserve registered methods on routine pull.
+For supported file-managed skills loaders, use one physical shared-root installation with many
 consumers rather than separate provider copies. Native-only assets and client
 configuration remain exclusive. Follow [shared-skills.md](shared-skills.md) for
 semantic migration and the actual cross-instance OS lock protocol. Any cooperating

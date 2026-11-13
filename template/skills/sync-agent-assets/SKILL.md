@@ -34,7 +34,10 @@ Read [workflows.md](references/workflows.md) for the selected operation,
 Use [reconcile.md](references/reconcile.md) for baseline decisions and multiple
 owners. These companions are installed with the skill; no scaffold checkout is
 needed. References describe procedures, not executable configuration or consent.
-For skills layout, migration and any installation writes, read
+For native package/catalog publication, setup, pull or cutover, read
+[native-distribution.md](references/native-distribution.md). Preserve the registered
+installation method; shared files and native caches have different maintainers.
+For file-managed skills layout, migration and installation writes, read
 [shared-skills.md](references/shared-skills.md). Use its bundled guarded file entry
 for regular-file installation/update/cutover and registry records; it holds OS
 locks throughout actual writes, verification and recording in the same process.
@@ -89,8 +92,13 @@ For standing authorization, evaluate this diff against the approved class of
 changes and proceed without redundant questions. A new SHA is expected in pull;
 new ownership, collection, effects or policy are not silently approved.
 
-- **Skills:** prefer one physical `~/.agents/skills` installation for supported
-  actual hosts, with separate consumer loading evidence. Keep vendor/system assets
+- **Skills:** use the registered file or native-package/catalog method. For
+  file-managed skills, prefer one physical `~/.agents/skills` installation for
+  supported actual hosts, with separate consumer loading evidence. Native managers
+  own their caches; never write into them with the file helper or silently switch
+  methods. Account for bundle membership and changed native entrypoints before
+  updating. Native publication/installation/loading are separate outcomes.
+  Keep vendor/system assets
   and required incompatible/unsupported-client editions in native roots. Compare
   all companions and semantics before migration; verify loader support before
   retiring duplicates. Avoid same-name entries in multiple active scan roots.
@@ -122,8 +130,10 @@ Immediately before each dependent write, revalidate policy, source, paths and
 complete target baseline/membership. After your own write use the expected
 post-state. Stop dependent writes on unexplained changes; a hash check followed
 by unconditional overwrite is not a lock. Coordinate one writer per physical
-scope, including registry updates. Cross-session exclusion uses the guarded entry's
-physical-root locks, not an agent-type assignment or a lock file's existence.
+scope, including registry updates. For file-managed targets, cross-session
+exclusion uses the guarded entry's physical-root locks, not an agent-type assignment
+or a lock file's existence. Native operations require verified manager/scheduler
+exclusion; our file locks do not constrain native background updaters.
 Do not replace a potentially active writer or release a lock before the write.
 
 Back up affected content with appropriate local protection. Apply narrowly with
@@ -137,6 +147,8 @@ Record per asset and machine/agent:
   owned entries correct, unrelated content preserved.
 - **Runtime:** actual host loading/connection verified only through authorized
   checks; otherwise `not-run`, `blocked` or `failed`. Disk presence is not loading.
+- **Native:** source refresh, installed revision/content, activation and
+  consumer loading recorded separately; `reload-required` is not loaded.
 - **State:** actual installed source/baseline, attempted/observed source, local
   backup and receipt pointers, deferred conflicts and pending contributions.
 

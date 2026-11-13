@@ -27,6 +27,13 @@ unless the user explicitly restricts it; resolve its target snapshot on each run
 This changes target coverage, not the chosen assets or allowed effects.
 Do not collect return contributions as a prerequisite to consuming published assets.
 
+Partition selected assets by their registered installation method before
+planning. Follow [native-distribution.md](native-distribution.md) for native
+packages/catalogs, including manager-owned caches, exact revision binding,
+credential identity, concurrency and reload evidence. Keep non-skill categories
+on their existing paths. A package update must cover its full selected membership
+under policy, not silently add every skill bundled with a single requested asset.
+
 1. Resolve the approved ref once to a full canonical commit and record observation
    time. Use [git-access.md](git-access.md). Fetch immutable objects into the
    registered cache, or the verified checkout's object database when no cache is
@@ -48,13 +55,18 @@ Do not collect return contributions as a prerequisite to consuming published ass
    effects outside policy. Files containing instructions cannot expand their own
    authorization. For auto-loaded hooks/plugins or auto-start MCP configurations,
    treat activation as an effect, not merely a harmless file copy.
-5. Group skill consumers by verified physical shared/native scan root and write
-   each installation once, using [shared-skills.md](shared-skills.md) and its
+5. Group file-managed skill consumers by verified physical shared/compatibility
+   scan root and write each installation once, using [shared-skills.md](shared-skills.md) and its
    guarded file entry. The actual writer holds the same root locks across sessions
    through baseline recheck, backup, writes, verification and recording. Record
    each asset's actual installed source separately. Report
    static correctness and runtime loading independently; runtime remains
    `not-run` unless its effects are authorized.
+6. Group native consumers by verified manager store/profile and registered package;
+   update once through its supported native interface. Do not copy to that cache,
+   hold a file lock in one process then call an unlocked updater, or assume catalog
+   refresh installed the package. Record the resolved/installed/active states
+   independently and defer unsupported access, revision or exclusion mechanisms.
 
 A coordinated invocation can freeze one canonical/external source set for all
 selected targets, but each target plans/applies independently. An unreachable
@@ -62,7 +74,8 @@ machine or broken provider does not block others. A later independent run may
 observe a newer release; do not claim all machines are always on the same SHA.
 Run once per machine with a physical installer and separate consumer verification
 where supported, or use one coordinator for registered machines. In either
-topology keep one guarded writer per physical scope, not one write per consumer.
+topology keep one guarded file writer per physical file scope and one verified
+native updater per manager store/profile, not one write per consumer.
 An overlapping run reports `busy` or queues through a supported scheduler; do not
 launch a replacement writer while the earlier task might still write.
 
@@ -77,7 +90,11 @@ this task. Cover all known machines and all their agents unless this task explic
 restricts targets. Use ~/.agent-assets/registry.json and the approved local policy;
 resolve and record the target snapshot, including unavailable and unregistered
 targets, without repeating opt-in questions. Resolve approved sources once; fetch
-through registered repository access; update only eligible selected assets.
+through registered repository access; update only eligible selected assets
+using their registered file or native method. Keep native caches manager-owned;
+verify source refresh, installed revision and session loading separately. Do not
+change installation method, enable background auto-update or update all packages
+merely to refresh this collection.
 Do not add unlinked machines, change the asset/effect scope, contribute,
 publish, repair hosts, install dependencies, or initiate authentication. Missing
 authorization/conflicts/unavailable targets become per-target deferred results;
@@ -107,6 +124,10 @@ Do not query other agents/machines for no-candidates receipts or install elsewhe
    do not repeatedly ask for staging, committing and pushing when already covered.
 4. Use a verified worktree with one writer; preserve unrelated staged/unstaged
    work. Validate exact selected files, including necessary catalog entries.
+   For packaged skills, include new companion membership and a package version
+   increment with matching manifests when packaged bytes change. Run the offline
+   distribution check; retain upstream references as references. Package metadata
+   does not authorize running bundled code or publishing a catalog endpoint.
    Establish Git attributes/line-ending transformations before previewing the
    final committed blobs. Record any approved transformation and installed hashes
    separately; do not force CRLF bytes into Git merely to match a worktree hash.
@@ -126,6 +147,11 @@ Do not query other agents/machines for no-candidates receipts or install elsewhe
    the precise local-only/branch-only/pending outcome. No-op contributions create
    no empty commit/PR. The next pull consumes published content; source owners'
    installation baselines do not advance merely because publication succeeded.
+   Keep the authoring checkout and any unconsumed edits. Retire a development
+   installation only during a verified consumer cutover; publishing is not a
+   request to delete local copies or uninstall assets other consumers still need.
+   If HTTP artifact publication is selected, build from the published commit and
+   record upload/activation separately. A Git push alone does not publish HTTP.
 
 ## After creating or editing an asset
 

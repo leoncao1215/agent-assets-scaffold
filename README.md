@@ -78,7 +78,13 @@ use a logged-in account for Git. Publication can use direct push or a focused PR
 according to authorization and branch protection; PR APIs have separate access.
 An optional lifecycle supplement connects asset edits to contribution checks when
 actually loaded, without a watcher or blanket publish permission.
-Supported actual hosts share one physical skills root per machine/user, with
+Instances can opt into native Pi packages, plugin marketplaces and HTTP skill
+catalogs using the generic distribution contract and offline builder. No package
+identity, business assets, source URL or active installation is injected by the
+scaffold. Native managers own their caches; file-managed installations retain
+the guarded writer. Registry/policy format 2 adds explicit native ownership and
+source/installed/loaded evidence, while format 1 remains valid for file-only use.
+Supported file-managed hosts share one physical skills root per machine/user, with
 separate consumer loading evidence. The template includes a regular-file apply
 helper holding OS locks across baseline recheck, backup, writes and recording;
 native configuration remains separate. It is not a general client adapter.

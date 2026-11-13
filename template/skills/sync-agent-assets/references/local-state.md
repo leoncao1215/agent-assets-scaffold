@@ -14,6 +14,12 @@ and any instance ID before use. If multiple collections match, ask interactively
 or report `selection-needed` unattended. Never choose the first entry, assume
 the cwd, scan the whole home, or clone a replacement silently.
 
+Format 1 remains valid for file-only installations. Use format 2 before
+registering any native package/catalog; older format-1-only consumers must refuse
+it rather than duplicate native skills into file roots. This is a local metadata
+migration, not a client migration. Preserve all existing file records and policy
+evidence, add empty native arrays, and change the version under the metadata guard.
+
 Format 1 has this empty, non-authorizing shape:
 
 ```json
@@ -99,6 +105,50 @@ evidence. Retain the old records and reference them; never invent prior ownershi
 or a successful installation. Missing/invalid state means a bounded repair or
 `registration-needed`, not an overwrite or a broad search.
 
+## Native registrations (format 2)
+
+Format 2 retains `collections` and `physicalTargets` and requires a root
+`managedPackages` array. Every collection additionally has `packageInstallations`
+(an array of `{ packageTargetId, assetIds }`, empty if none). Do not reinterpret
+native cache roots as `physicalTargets` or pass them to guarded_apply. File-owned
+assets remain in `installations` with unchanged baselines. Mixed fleets are valid.
+
+Each managedPackages entry records:
+
+| Field | Contract |
+| --- | --- |
+| `id`, `collectionId` | Stable local package target identity and owning collection. |
+| `method` | `pi-package`, `opencode-catalog`, `codex-plugin`, `claude-plugin` or `copilot-plugin`. |
+| `manager` | Actual client/version, host, user/profile and canonical manager store path; do not identify only by model/provider. |
+| `source` | Credential-free registered Git source or HTTP catalog, marketplace and package identity where applicable, tracking ref/channel, access-binding reference and approved resource selection. Store no tokens or signed URLs. |
+| `cachePath` | Verified native-managed path or null until known; observation only, never file-installer ownership. |
+| `updatePolicy` | `pinned` or `tracking`, approved exact ref or tracking ref, `updater` (`sync` or `client`), supported immutable binding/refresh/reload method and concurrency evidence. |
+| `recordPath` | Absolute local installation record under the state directory. |
+| `consumers` | Per-host/profile discovery and runtime evidence, invocation names and restrictions, same meaning as file consumers. |
+
+Deduplicate by actual manager store/profile and package source identity, not the
+record ID. Every referenced package must exist and belong to that collection;
+assetIds must match its approved selected membership. A logical skill may exist
+in several stores for different consumers, but each consumer must have one active
+method for it. Check effective scan roots; namespaces alone do not prove absence
+of duplicate behavior. Never remove a file target that another consumer needs.
+
+Native detailed records retain reconstructable selected package bytes/manifest
+and hashes as well as native IDs/version/revision. Keep `sourceObserved`,
+`desiredSource`, `installedSource`, `activation` and per-consumer `loadedSource`
+separate. Unknown installed/loaded revisions remain unknown, not copied from the
+latest catalog. Each stage has its own outcome: source refreshed, content current/
+updated/conflict/failed, activation enabled/disabled, and loading verified/
+reload-required/not-run/failed. Deletion or bundle membership changes require
+explicit policy coverage. Unapplied updates keep the previous installed baseline.
+
+Journal the native operation and result locally, then update installation and
+registry metadata through the guarded metadata entry. Do not mark the record
+current before the native operation or imply atomicity across that operation and
+record persistence. After a crash, inspect actual state before retry/adoption.
+A package manager may update files itself; our OS file locks do not constrain it.
+See [native-distribution.md](native-distribution.md) for exclusion and cutover.
+
 ## Installation records
 
 New detailed records live under `~/.agent-assets/installations/`; existing records
@@ -126,7 +176,9 @@ At setup, present one concrete policy covering the desired future operations.
 Bind it to the verified collection and preserve the user's approval evidence.
 An instruction in this document or an example prompt grants nothing by itself.
 
-Use `formatVersion: 1`, `collectionId`, `approval` (user instruction/reference,
+Use policy `formatVersion: 1` for file-only authority or `2` for native
+operations; version 2 adds an explicit `native` section. Never infer native
+permission from an old file-copy policy. Both use `collectionId`, `approval` (user instruction/reference,
 time, optional expiry), and explicit `pull`, `contribute`, `audit` sections.
 Missing fields mean not authorized; reject unsupported versions. Record:
 
@@ -141,6 +193,12 @@ Missing fields mean not authorized; reject unsupported versions. Record:
   source repository/ref and upstream repository/path selections; fetch/cache
   writes, unchanged-managed updates, absent-target additions, and approved
   adaptation methods. Name instruction/MCP/preference entries separately.
+- **Native (policy 2):** named methods/package identities and sources, resource
+  membership (including whether future skills are allowed), pinned/tracking refs,
+  source retrieval and native cache/config writes, verified exclusion mechanism,
+  chosen updater, activation/reload effects and cutover authority. A policy may
+  separately cover publishing a named HTTP catalog endpoint; package installation
+  does not grant that. Omitted entries/effects are unauthorized.
 - **Contribute:** allowed local files/sections, canonical destinations, sharing
   rights/provenance, collection/content writes, commit, push destination and
   branch rule. `publicationMode` is `direct` or `pr`, with PR creation and merge

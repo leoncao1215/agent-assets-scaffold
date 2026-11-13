@@ -82,3 +82,16 @@ never follow a path or symlink outside either checkout.
 The generated `instance.json` and the lock itself are not inherited files and
 are not in this map. The lock has no timestamps, machine paths, credentials, or
 client installation information and is suitable to commit with the instance.
+
+## Native distribution contract upgrade
+
+The optional native package/catalog contract adds a generic offline builder and
+DISTRIBUTION.md. It does not choose package identities, migrate clients, convert
+upstream references into bundled content or publish artifacts. Existing instances
+review those additions against their scaffold baseline and keep their own assets.
+File-only registry/policy format 1 remains valid; native registration requires an
+explicit local format-2 migration, preserving existing records. Older format-1-only
+sync skills must refuse that version instead of writing duplicate file copies.
+Native caches remain owned by their managers; the guarded file installer is not
+extended to execute package commands. These local registration changes and actual
+host validation are separate from upgrading the instance's source documents.

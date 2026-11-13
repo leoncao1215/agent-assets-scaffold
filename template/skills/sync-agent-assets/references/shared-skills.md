@@ -2,7 +2,12 @@
 
 ## Layout and evidence
 
-Prefer `~/.agents/skills` for reusable skills on each machine/user **when the
+This reference owns file-managed installations. Native package/catalog caches
+are owned by their clients; follow [native-distribution.md](native-distribution.md)
+for those targets. Do not use this helper to install into or retire native caches.
+A native cutover cannot remove a shared copy still needed by another consumer.
+
+Prefer `~/.agents/skills` for file-managed reusable skills on each machine/user **when the
 actual client and host support discovering that root**. Keep native roots for
 vendor-managed content (including Codex `.system`), required exclusive adaptations,
 and compatibility copies for consumers without shared-root support. Configuration,
@@ -119,7 +124,7 @@ The plan is JSON data with exactly these top-level fields:
 | --- | --- |
 | `formatVersion` | Integer 1. |
 | `operationId` | New canonical UUID; also the recovery directory name. Never reuse a previous applied/partial operation. |
-| `roots` | Absolute registered whole scan roots involved in this transaction. No nested/duplicate roots, home/drive roots, links or vendor/Git targets. Include native roots being retired and the shared destination. |
+| `roots` | Absolute registered whole scan roots involved in this transaction; `[]` only for metadata-only writes. No nested/duplicate roots, home/drive roots, links or vendor/Git targets. Include native roots being retired and the shared destination. |
 | `directories` | Array of `{path, entries}`: immediate membership of every target parent through its scan root, null for absent directories. Read names only; never recursively hash unrelated skills. |
 | `files` | Ordered array of `{action, target, beforeSha256, source, sourceSha256}` as below. |
 
@@ -141,7 +146,10 @@ preserving other records. They use file-hash baselines and the metadata lock, no
 directory snapshots containing volatile run state. Put metadata writes last.
 Validate their documented schema in planning; the helper checks JSON-object syntax
 and exact bytes, not the full registry semantics. Credential policy/key files are
-not targets of this installer.
+not targets of this installer. A native-only installation may use `roots: []` and
+`directories: []` to write only registry/installation JSON. The existing metadata
+lock covers those writes. Other targets (including native caches and policy) are
+still rejected; this does not add native command execution or manager locking.
 
 Capture the plan's SHA-256 in the approved task/plan, then invoke once in the actual
 shell, with literal correctly quoted paths. Example argument shape (not a command

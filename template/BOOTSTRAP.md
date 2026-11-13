@@ -40,12 +40,19 @@ instance. Preserve local changes and other instances' assets. Show exact paths,
 selected assets and upstream versions, conflicts, dependencies, and side effects
 before applying changes not already authorized. Use supported native mechanisms;
 leave unsupported assets uninstalled and explain the limitation.
-Prefer one ~/.agents/skills physical installation for actual hosts that support
-it. Keep vendor/system assets and necessary exclusive compatibility editions in
+Choose and register each skill's file or native package/catalog method using
+references/native-distribution.md. Preserve existing methods unless migration is
+selected. Native support includes access, immutable version binding, update
+exclusion and actual host discovery; CLI support does not prove T3 support.
+Use registry/policy format 2 before registering native installations; retain
+file baselines. Package installation does not apply the other asset categories.
+For file-managed skills, prefer one ~/.agents/skills physical installation for
+actual hosts that support it. Keep vendor/system assets and necessary exclusive compatibility editions in
 native roots; client configuration stays independent. Compare all companions and
 semantics, verify actual loader support/restrictions, then retire approved duplicate
 files with backups. Register physical installations separately from consumers.
-Use references/shared-skills.md and its guarded file entry for installation,
+Native managers own their caches; the file helper does not update or lock them.
+Use references/shared-skills.md and its guarded file entry for file installation,
 update, migration and registry writes. The writing process must hold every affected
 physical-root lock through revalidation, backup, writes, verification and recording.
 This helper needs an existing Python 3.10+ runtime, not additional packages.

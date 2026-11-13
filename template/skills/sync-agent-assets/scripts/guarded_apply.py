@@ -194,8 +194,8 @@ def parse_plan(raw: bytes, state_dir: Path):
         raise ValueError('Unsupported plan version.')
     if not isinstance(plan['operationId'], str) or str(uuid.UUID(plan['operationId'])) != plan['operationId']:
         raise ValueError('operationId must be a canonical UUID.')
-    if not isinstance(plan['roots'], list) or not plan['roots']:
-        raise ValueError('A physical root selection is required.')
+    if not isinstance(plan['roots'], list):
+        raise ValueError('Physical roots must be an array.')
     roots = [plain_path(p) for p in plan['roots']]
     if len({identity(p) for p in roots}) != len(roots):
         raise ValueError('Duplicate roots.')
@@ -221,6 +221,8 @@ def parse_plan(raw: bytes, state_dir: Path):
         raise ValueError('No file operations; report no-op without calling apply.')
     if not isinstance(plan['directories'], list):
         raise ValueError('Directory baselines must be an array.')
+    if not roots and plan['directories']:
+        raise ValueError('Metadata-only plans have no directory baselines.')
 
     def owner(path):
         for root in roots:

@@ -16,6 +16,11 @@ description or preference asset, check only the task's known changed content:
   or a user-approved local `autoAfterEdit` policy covers the exact source,
   destination, content and publication effects. Otherwise report/record a pending
   contribution without automatically asking a new question after every edit.
+- Prefer editing the canonical checkout over a native package cache. Include
+  distribution membership and a package version/manifest update when packaged
+  bytes change. Keep private configuration and runtime state outside packages.
+  Publication does not delete development copies: install and verify the published
+  revision before a separate cutover, preserving other consumers and local edits.
 - Contribution handles only that selected change. Do not inventory all machines
   or start distribution. Follow the configured direct-push or PR policy; PRs are
   not mandatory unless required by the user or repository protection.

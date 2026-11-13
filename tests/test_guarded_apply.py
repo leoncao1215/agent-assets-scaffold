@@ -234,6 +234,33 @@ class GuardedApplyTests(unittest.TestCase):
         self.assertEqual(json.loads(registry.read_text())['formatVersion'], 1)
         self.assertEqual(self.target.read_bytes(), b'new')
 
+    def test_metadata_only_native_receipt_uses_metadata_lock_without_cache_root(self):
+        candidate = self.base / 'native-record.json'
+        candidate.write_text('{"formatVersion":2,"collections":[],"physicalTargets":[],"managedPackages":[]}')
+        registry = self.state / 'registry.json'
+        record = self.state / 'installations' / 'native.json'
+        ops = [{'action': 'write', 'target': str(target), 'beforeSha256': None,
+                'source': str(candidate), 'sourceSha256': guard.sha256(candidate.read_bytes())}
+               for target in (record, registry)]
+        path, digest = self.plan(roots=[], directories=[], files=ops)
+        with guard.ScopeLocks([self.state / 'metadata'], self.state, 0):
+            with self.assertRaises(guard.Busy):
+                guard.apply_plan(path, digest, self.state, 0)
+        self.assertFalse(registry.exists())
+        guard.apply_plan(path, digest, self.state)
+        self.assertEqual(json.loads(registry.read_text())['formatVersion'], 2)
+        self.assertEqual(record.read_bytes(), candidate.read_bytes())
+        self.assertEqual(self.target.read_bytes(), b'old')
+
+    def test_empty_roots_do_not_authorize_cache_or_policy_writes(self):
+        for target in (self.base / 'native-cache' / 'SKILL.md', self.state / 'policy.json'):
+            path, digest = self.plan(roots=[], directories=[], files=[{
+                'action': 'write', 'target': str(target), 'beforeSha256': None,
+                'source': str(self.source), 'sourceSha256': guard.sha256(b'new')}])
+            with self.assertRaisesRegex(ValueError, 'outside'):
+                guard.apply_plan(path, digest, self.state)
+            self.assertFalse(target.exists())
+
     def test_plan_digest_escape_and_vendor_files_are_rejected(self):
         path, digest = self.plan()
         with self.assertRaises(guard.Drift):

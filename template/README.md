@@ -16,7 +16,10 @@ work. Independent targets continue when another target is unavailable.
 An unqualified **distribution / 下发** covers all known machines and all their
 agents; only an explicit target restriction narrows it. Unavailable targets stay
 in the report rather than being silently dropped.
-Supported actual clients/hosts prefer one physical `~/.agents/skills` installation
+Native skill packaging is an optional instance choice: see [DISTRIBUTION.md](DISTRIBUTION.md).
+The template supplies the offline helper and workflow, without choosing a package
+identity or adding business skills. Existing methods are preserved on pull.
+For file-managed skills, supported clients/hosts prefer one physical `~/.agents/skills` installation
 per machine/user. Native roots retain vendor/system content and compatibility
 editions; configuration stays separate. The registry tracks physical installations
 and their consumers so shared bytes are updated once. See
