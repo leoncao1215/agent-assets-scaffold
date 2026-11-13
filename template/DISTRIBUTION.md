@@ -71,6 +71,17 @@ access, immutable revision selection and update exclusion in the actual host.
 Creating this distribution metadata does not authorize client migration or native
 auto-update. Existing installation methods and user policies remain unchanged.
 
+An exact revision selector needs an explicit advance before an update can consume
+a newer commit. In the Windows versions checked on 2026-11-13, Codex and Copilot
+rejected repeating marketplace add to change the same marketplace's pinned ref.
+Use their documented profile configuration fields, preserving other entries and
+encoding/newlines, then refresh/update the selected marketplace/plugin. Pi can
+replace a registered Git package's pin by installing the same repository at the
+new exact commit. Recheck installed help/behavior for later versions; never remove
+a marketplace and its plugins merely to work around an add-command rejection.
+OpenCode catalog discovery can be asynchronous: initial list snapshots are not
+proof of absence. Verify bounded readiness and actual cached content after reload.
+
 Keep writable source checkouts and private runtime/configuration outside client
 caches. After publication, retire a temporary development discovery entry only
 after the published copy is installed and loaded, and only if no other consumer
