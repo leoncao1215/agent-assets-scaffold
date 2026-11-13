@@ -127,16 +127,31 @@ Do not launch a client merely to obtain help if that host activates extensions.
 | Client | Interface and update boundary |
 | --- | --- |
 | Pi | `pi install SOURCE`, `pi update SOURCE`, `pi list`; `/reload` or a new session reloads resources. Pi 1.5.0 help was checked on Windows: bare `pi update` updates Pi itself; `--extensions` updates all packages. `-e SOURCE` is temporary and can refresh at startup/reload, so it is for reviewed development use rather than our default unattended policy. |
-| OpenCode V2 | `skills: ["https://example.invalid/skills/"]` loads an HTTP `index.json` catalog. Each skill lists relative files and a version. No universal refresh timer/CLI is asserted; establish the actual host's refresh mechanism before scheduling. A generic Git URL is not this catalog. |
+| OpenCode V2 | `skills: ["https://example.invalid/skills/"]` loads an HTTP `index.json` catalog. Each skill lists relative files and a version. OpenCode 2.2.5 was checked with an isolated loopback catalog: `location.reload` refreshed changed versions. Initial skill-list results can precede catalog discovery; wait for bounded readiness rather than assuming an immediate complete list. No automatic polling interval is asserted. A generic Git URL is not this catalog. |
 | Codex | `codex plugin marketplace add SOURCE --ref REF`, `codex plugin add PLUGIN@MARKETPLACE`, `codex plugin marketplace upgrade MARKETPLACE`, `codex plugin list --marketplace MARKETPLACE --json`. Windows CLI 0.168.0-alpha.1 help was checked. Upgrade refreshes marketplace snapshots; verify installed bytes separately. Official guidance calls for a new session after install. T3/IDE behavior is not inferred from CLI support. |
 | Claude Code | Register a Git marketplace, install `PLUGIN@MARKETPLACE`, then `claude plugin update PLUGIN@MARKETPLACE`; use the client's reload/new-session result. Custom marketplace auto-update is off by default in the checked docs. |
 | Copilot CLI | Register a marketplace and `copilot plugin install PLUGIN@MARKETPLACE`; `copilot plugin update NAME` updates the selected plugin. Marketplace catalog refresh and installed-plugin update are separate operations. Verify the actual host/session refresh behavior. |
 
-Documentation checked 2026-11-13; no live installations are claimed:
+Documentation and bounded Windows native-loader checks were performed on
+2026-11-13. Codex 0.168.0-alpha.1 app-server skills/list advertised installed
+plugin skills as `PLUGIN:SKILL`; Pi 1.5.0 RPC get_commands reported package-origin
+skill commands; Copilot CLI 1.0.111 skill list reported plugin-origin skills.
+OpenCode 2.2.5 registered HTTP catalog skills and refreshed a changed version
+through its native location reload. These checks used isolated configuration and
+no model/business-tool calls. They do not prove a production profile, active T3
+conversation or another OS has migrated. Keep raw logs, credentials and machine
+paths local; record exact sources and results in local receipts.
+
+The trial also confirmed that changing a client's config home alone may leave
+shared/ancestor skill discovery active. Inspect discovered paths and establish
+supported path-specific exclusions or project boundaries before exposing a trial
+to a model. Do not disable names globally or remove shared files used elsewhere.
+
+Official references:
 
 - [Pi packages](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/packages.md)
 - [Pi CLI](https://github.com/badlogic/pi-mono/blob/main/packages/coding-agent/docs/cli.md)
-- [OpenCode skills](https://opencode.ai/docs/skills/)
+- [OpenCode skills](https://opencode.ai/v2/docs/skills)
 - [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins)
 - [Codex plugin use](https://developers.openai.com/codex/plugins/)
 - [Claude plugin management](https://code.claude.com/docs/en/plugins/install)
