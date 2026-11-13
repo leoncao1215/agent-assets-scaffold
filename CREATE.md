@@ -45,6 +45,10 @@ but is not an authentication or access-control mechanism.
 3. If repository initialization/publication is requested, check the intended
    commit identity and destination; use a fresh Git history. Do not inherit
    a work email for a personal repository without the owner's intent.
+   Follow the generated Git-access contract for a repository-specific deploy key
+   and user-granted read/write scope where supported. Do not silently use the
+   logged-in account's Git permissions. Direct push or PR follows the selected
+   publication policy and host protection; neither is implied by generation.
 4. Add only selected, publishable assets, with their sources and rights. The
    instance may be private, but that does not authorize sharing others' content.
 5. Bootstrap selected clients from the instance's `BOOTSTRAP.md` when requested.

@@ -7,6 +7,22 @@ collections created from the same scaffold.
 Start with [BOOTSTRAP.md](BOOTSTRAP.md) to install a selected subset into an
 agent. To add or synchronize assets later, use
 [sync-agent-assets](skills/sync-agent-assets/SKILL.md).
+Use **pull / 拉取** for scheduled or manually triggered incoming updates,
+**contribute / 入库** for selected improvements, and **audit / 巡检** for bounded
+drift reports. Publishing a contribution does not require checking every consumer.
+Register source/cache locations and installation pointers at
+`~/.agent-assets/registry.json`; a user-approved local policy governs unattended
+work. Independent targets continue when another target is unavailable.
+An unqualified **distribution / 下发** covers all known machines and all their
+agents; only an explicit target restriction narrows it. Unavailable targets stay
+in the report rather than being silently dropped.
+Supported actual clients/hosts prefer one physical `~/.agents/skills` installation
+per machine/user. Native roots retain vendor/system content and compatibility
+editions; configuration stays separate. The registry tracks physical installations
+and their consumers so shared bytes are updated once. See
+[shared skills and guarded migration](skills/sync-agent-assets/references/shared-skills.md).
+The bundled file-application helper needs existing Python 3.10+ and uses OS locks
+held by the writing process. It does not block non-participating manual editors.
 
 ## Content
 
@@ -16,7 +32,7 @@ agent. To add or synchronize assets later, use
 | [skills/sources.json](skills/sources.json) | Selected upstream references or customized-fork baselines; initially empty. |
 | `mcp/servers/` | Real server descriptions selected for this collection; initially empty. |
 | [mcp/examples/](mcp/examples/README.md) | Fictional documentation, never installation targets. |
-| `instructions/` | Optional additive guidance; no policy supplements are preselected. |
+| `instructions/` | Optional additive guidance, including an asset lifecycle completion check; nothing activates by file presence. |
 | `preferences/` | Small, selected native-client preferences; initially empty. |
 | `instance.json` | Collection identity and optional credential-free remote metadata. |
 | `scaffold-lock.json` | Scaffold provenance and original template hashes for upgrade review. |
@@ -40,6 +56,10 @@ overlap; matching asset names are not permission to overwrite.
 Updating these files does not install them or grant permission to start tools.
 Installation, runtime loading, networking, and publication have distinct effects;
 honor the user's existing authorization for each requested task.
+Setup prefers a dedicated deploy key per machine/user/repository with the user's
+read/write grant; routine Git operations do not fall back to account credentials.
+Authorized publication can push directly or use a focused PR. Repository protection
+still applies; PR APIs need separate access from an SSH deploy key.
 
 ## Maintaining this instance
 

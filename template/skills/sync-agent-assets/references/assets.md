@@ -12,6 +12,12 @@ that directory. Keep installed links self-contained. Record runtime dependencies
 and side effects in the skill; a script's presence is not permission to execute
 it. Project-owned skills stay with their project unless explicitly selected for
 reuse with appropriate rights.
+For clients/hosts with verified shared-root discovery, prefer one physical
+`~/.agents/skills` copy. Keep native vendor/system content and necessary
+compatibility editions separate. Do not create same-name duplicates across active
+scan roots. Follow [shared-skills.md](shared-skills.md) for companion/semantic
+comparison, physical/consumer records and guarded migration; client configuration
+is not shared as part of this layout.
 
 `skills/sources.json` has exactly `version: 1` and a `skills` array. Each entry
 has `name`, `mode`, and `upstream`; `upstream` has `repository`, `path`, and `ref`,

@@ -54,6 +54,23 @@ Validate the new documents, JSON, companion files, and intended changes. Commit
 or publish only when authorized. Client installation records are unchanged until
 a separate sync actually applies assets from the updated instance.
 
+## Registry and workflow migration
+
+For upgrades introducing the registry and independent workflows, include the
+sync skill's new companion references and optional asset-lifecycle supplement in
+the reviewed change set. At subsequent client setup, migrate only evidenced old
+installation paths/baselines into the local registry; retain legacy records.
+Do not fabricate a prior policy or write grant, start schedules, migrate credentials,
+or cancel an in-progress sync as a side effect of upgrading template files.
+Existing instance choices of direct push or PR remain explicit user policy.
+For shared-skills/guarded-writer upgrades, include the bundled application script
+and shared-skills reference. Do not collapse existing per-owner records into a
+physical installation until paths, complete content and host loading are verified.
+Record consumers separately and retain legacy baselines. Existing copies and
+vendor `.system` remain untouched until a separately authorized guarded cutover.
+Install the guarded entry as a companion and validate the available runtime;
+an absent helper/runtime is not permission to continue using unlocked writes.
+
 ## Lock format 1
 
 `scaffold-lock.json` contains exactly `formatVersion`, `source`, and `files`.

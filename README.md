@@ -14,10 +14,13 @@ renamed, moved, or connected to this scaffold to keep working.
 ## Create an instance
 
 Requires Git and Python 3.10+ for the small creation helper; no Python packages
-are needed. The generated repository has no Python runtime dependency.
+are needed. The generated sync skill's optional invocation requires Python 3.10+
+for its guarded file-application helper; merely reading or cloning assets runs none
+of it. No Python packages are needed for that helper either.
 
-Clone this repository using your normal authorized Git access. From its checkout,
-run the following, choosing a new destination outside this checkout:
+Obtain this public scaffold without account credentials, or use approved
+repository-scoped Git access for a private fork. From its checkout, run the
+following, choosing a new destination outside this checkout:
 
 ```text
 python tools/create_instance.py ../my-agent-assets --name my-agent-assets --scope personal
@@ -49,8 +52,9 @@ personal model choices, company package-source settings, client adapters,
 background services, or implicit dependency installation.
 
 The template's catalogs are empty. Examples never become installation targets.
-The default bootstrap handles the current agent; multiple agents or machines
-are an explicit expansion using the optional reconciliation procedure. No
+The default bootstrap handles the current agent. An unqualified distribution
+request covers all known machines and all their agents; an explicit restriction
+narrows that scope. Setup and distribution use the reconciliation procedure. No
 particular workbench or provider is required.
 
 ## Two different update paths
@@ -61,8 +65,23 @@ the baseline recorded in `scaffold-lock.json`, preserving instance edits. See
 three-way review, not an automatic updater or a live template subscription.
 
 **Instance to machine:** use the instance's `sync-agent-assets` skill to preview,
-adapt, and apply selected assets. Local contributions return only to that
-instance. Promoting reusable improvements to this scaffold is a separate task.
+adapt, and apply selected assets through scheduled or manual **pull**. Setup
+records source/cache locations at `~/.agent-assets/registry.json` and the user's
+bounded standing policy. Named **contributions** publish independently; an
+**audit** reports drift without installation. A failing consumer does not block
+other targets or publication. Local contributions return only to that instance.
+Promoting reusable improvements to this scaffold is a separate task.
+
+The generic setup contract prefers repository-scoped deploy keys where supported,
+with the user granting read/write access to the public key. It does not silently
+use a logged-in account for Git. Publication can use direct push or a focused PR,
+according to authorization and branch protection; PR APIs have separate access.
+An optional lifecycle supplement connects asset edits to contribution checks when
+actually loaded, without a watcher or blanket publish permission.
+Supported actual hosts share one physical skills root per machine/user, with
+separate consumer loading evidence. The template includes a regular-file apply
+helper holding OS locks across baseline recheck, backup, writes and recording;
+native configuration remains separate. It is not a general client adapter.
 
 Two instances do not share assets or synchronization targets merely because
 they use the same scaffold. Repository separation alone does not isolate a
@@ -81,6 +100,9 @@ The initial version was exercised on Windows with Python 3.12. Other platforms
 and actual client loading have not been verified. Successful generation or
 static validation is not evidence that a client loaded an asset. The consuming
 agent checks its real host's supported formats and installation mechanisms.
+The file-application tests additionally exercise Windows process contention,
+crash release, post-wait drift, static verification and recovery records in
+temporary directories. The POSIX flock/mode branch remains platform-qualified.
 
 ## License and contributions
 
