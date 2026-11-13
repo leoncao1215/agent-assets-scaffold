@@ -12,6 +12,7 @@ description: Pull and install registered agent assets on a schedule or manually,
 | Scheduled sync, pull, 拉取, update installed assets | Incoming pull for registered targets; manual triggering uses the same procedure. |
 | Distribute, 下发, without an explicit target restriction | Incoming pull across all known machines and all their agents; record unavailable targets too. |
 | Contribute, 入库 followed by selected assets | Review and publish that contribution only; no consumer inventory or distribution. |
+| Upstream sync, 同步上游 followed by a source/skill selection | Stage a B/L/U reconciliation into the collection; no client installation or implicit publication. |
 | Audit, 巡检 | Bounded inventory/drift report; no publication or installation. |
 | First install, setup, register another machine/agent | Register source, access, owners and policy, then incoming installation. |
 

@@ -58,7 +58,10 @@ When `distribution.json` exists:
 - Use the reviewed offline distribution helper to propose matching manifests in
   a new external directory. Review/apply only those metadata changes; do not copy
   an entire client configuration or execute the helper from an unverified source.
-- Keep upstream references outside the bundle. Building a catalog does not upload
+- Keep reference-only entries outside the bundle. An explicitly authorized
+  vendored fork is canonical local content and can be packaged with its reviewed
+  companions and notices; retain repository/path/ref/baseCommit for later merge.
+  Building a catalog does not upload
   it; Git publication and HTTP artifact publication have separate outcomes.
 
 For a file-only collection, preserve that choice. Do not introduce native package

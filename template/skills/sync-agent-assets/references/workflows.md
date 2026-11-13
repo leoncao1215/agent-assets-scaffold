@@ -160,6 +160,33 @@ Do not query other agents/machines for no-candidates receipts or install elsewhe
    If HTTP artifact publication is selected, build from the published commit and
    record upload/activation separately. A Git push alone does not publish HTTP.
 
+## Upstream sync / 同步上游
+
+This explicit operation updates selected tracked local copies, not consumer
+installations. Read the selected collection's source contract and sources.json.
+For each fork, reconstruct upstream baseline B from its baseCommit, canonical
+local tree L from the collection and candidate U from one resolved upstream
+commit. Retrieve only authorized inputs through that upstream's registered access;
+a collection's deploy key does not grant another repository's access. An available
+local snapshot must be labelled as such, never silently described as remote latest.
+
+Stage full membership/companion diffs and a three-way proposal outside active
+skill directories. Preserve local integration, runtime bindings, attribution and
+invocation/permission semantics. Treat new dependencies, removals and capability
+changes as part of the review; a clean textual merge is not a runtime check.
+A missing baseline/source or semantic conflict defers only that selection.
+Upstream working-tree edits are not part of a committed U and remain untouched.
+
+Only after an accepted reconciliation, update local content and that entry's
+baseCommit together. Keep provenance in the collection source catalog; retain
+historical initial-import records as history, not as the new live baseline. A fetch alone
+must not advance B. Update native membership/version/manifests and run relevant
+validation. Publication uses the separately authorized contribution operation;
+consumer installation remains a subsequent pull. Do not make ordinary pull
+fetch/merge all upstream forks or restore an upstream's legacy direct-client copy
+behavior. Converting a reference to a local fork requires an explicit migration
+selection; do not vendor private upstreams merely because a ref is readable.
+
 ## After creating or editing an asset
 
 For an explicit collection-owned skill development task, use the available

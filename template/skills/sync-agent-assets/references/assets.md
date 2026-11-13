@@ -30,7 +30,8 @@ plus `baseCommit` for a fork only:
   installation identity. Surface differences from upstream skill metadata.
 - `mode: reference`: fetch the selected skill from upstream without storing a
   copy in this instance. A same-name canonical directory is a collision.
-- `mode: fork`: this instance contains `skills/<name>/` with customized content;
+- `mode: fork`: this instance contains a reviewed local copy at `skills/<name>/`,
+  initially unchanged or locally customized;
   `baseCommit` is the full upstream commit from which it was derived or last
   reconciled, not an arbitrary recently observed commit.
 - `repository`: credential-free HTTPS or SSH Git URL, never shell commands or
