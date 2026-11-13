@@ -168,6 +168,21 @@ A skipped/conflicted/failed update must not advance the installed baseline or ma
 the whole target current. Pending contributions and run receipts stay under
 `~/.agent-assets/runs/`, never in the canonical tree.
 
+## Execution identity and timing
+
+The machine executor and a client consumer are different roles. Keep consumer
+ownerId and installation ownership unchanged. Each run records its executor
+(machine/user, host/client/profile and operation ID), resolved clients and local
+record pointers. An optional pull.executor policy preference names a local
+executor and the client/profile scopes it may manage; existing task/policy
+authority still governs every operation. This does not require a new registry
+format or rewrite of installed baselines.
+
+Record observed resolution/planning/update/discovery time and human waiting or
+deferred work in the machine receipt. Send only the bounded machine summary to
+a coordinator, with independent per-client outcomes; keep raw state local. See
+[machine-execution.md](machine-execution.md).
+
 ## Standing policy
 
 A local `policy.json` is a record of the user's authorization, not authorization

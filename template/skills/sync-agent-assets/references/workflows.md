@@ -26,6 +26,10 @@ use that bounded scope. A scheduled distribution stores the all-known selector
 unless the user explicitly restricts it; resolve its target snapshot on each run.
 This changes target coverage, not the chosen assets or allowed effects.
 Do not collect return contributions as a prerequisite to consuming published assets.
+Assign one executor per selected machine/user context as described in
+[machine-execution.md](machine-execution.md). It plans and manages all selected
+local client profiles without launching a separate LLM for each. Setup records
+capabilities once; routine pulls reuse them until relevant facts change.
 
 Partition selected assets by their registered installation method before
 planning. Follow [native-distribution.md](native-distribution.md) for native
@@ -72,8 +76,9 @@ A coordinated invocation can freeze one canonical/external source set for all
 selected targets, but each target plans/applies independently. An unreachable
 machine or broken provider does not block others. A later independent run may
 observe a newer release; do not claim all machines are always on the same SHA.
-Run once per machine with a physical installer and separate consumer verification
-where supported, or use one coordinator for registered machines. In either
+Run each scheduled machine pull independently, or let a manual coordinator
+dispatch one worker per machine context and collect machine reports. Each worker
+verifies the separate consumers with supported local interfaces. In either
 topology keep one guarded file writer per physical file scope and one verified
 native updater per manager store/profile, not one write per consumer.
 An overlapping run reports `busy` or queues through a supported scheduler; do not
@@ -90,8 +95,10 @@ this task. Cover all known machines and all their agents unless this task explic
 restricts targets. Use ~/.agent-assets/registry.json and the approved local policy;
 resolve and record the target snapshot, including unavailable and unregistered
 targets, without repeating opt-in questions. Resolve approved sources once; fetch
-through registered repository access; update only eligible selected assets
-using their registered file or native method. Keep native caches manager-owned;
+through registered repository access. Use one executor per machine context to
+manage its selected clients, not a separate LLM session per client. Return one
+machine report with separate client/asset outcomes. Update only eligible selected
+assets using their registered file or native method. Keep native caches manager-owned;
 verify source refresh, installed revision and session loading separately. Do not
 change installation method, enable background auto-update or update all packages
 merely to refresh this collection.
@@ -155,6 +162,9 @@ Do not query other agents/machines for no-candidates receipts or install elsewhe
 
 ## After creating or editing an asset
 
+For an explicit collection-owned skill development task, use the available
+`develop-agent-skill` lifecycle before contribution; it covers source selection,
+companions, packaging and validation without requiring a vendor authoring helper.
 This skill cannot observe arbitrary edits by itself. The optional installed
 `instructions/asset-lifecycle.md` supplement makes the owning task perform a
 bounded completion check: use its existing changed-file list, identify the

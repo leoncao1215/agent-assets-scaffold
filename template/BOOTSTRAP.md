@@ -35,6 +35,11 @@ sync-agent-assets and its companions in the proposed installation. Ask which
 additional asset categories to include if I have not selected them. Empty
 categories and fictional examples do not require installation.
 
+Use one authorized executor per selected machine/user context to manage all
+selected local client profiles. Reuse supported CLI/RPC/app-server checks instead
+of starting a separate LLM for each client. Keep per-client ownership, settings
+and loading evidence independent; see references/machine-execution.md.
+
 Check selected destinations and any prior installation records for this
 instance. Preserve local changes and other instances' assets. Show exact paths,
 selected assets and upstream versions, conflicts, dependencies, and side effects

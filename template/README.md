@@ -7,12 +7,18 @@ collections created from the same scaffold.
 Start with [BOOTSTRAP.md](BOOTSTRAP.md) to install a selected subset into an
 agent. To add or synchronize assets later, use
 [sync-agent-assets](skills/sync-agent-assets/SKILL.md).
+Use [develop-agent-skill](skills/develop-agent-skill/SKILL.md) for the
+collection-owned skill development lifecycle, without depending on a vendor
+authoring helper.
 Use **pull / 拉取** for scheduled or manually triggered incoming updates,
 **contribute / 入库** for selected improvements, and **audit / 巡检** for bounded
 drift reports. Publishing a contribution does not require checking every consumer.
 Register source/cache locations and installation pointers at
 `~/.agent-assets/registry.json`; a user-approved local policy governs unattended
-work. Independent targets continue when another target is unavailable.
+work. Independent targets continue when another target is unavailable. Use one
+authorized executor per machine/user context to manage selected local clients
+through supported interfaces, with separate client results and unchanged physical
+locking. See [machine execution](skills/sync-agent-assets/references/machine-execution.md).
 An unqualified **distribution / 下发** covers all known machines and all their
 agents; only an explicit target restriction narrows it. Unavailable targets stay
 in the report rather than being silently dropped.

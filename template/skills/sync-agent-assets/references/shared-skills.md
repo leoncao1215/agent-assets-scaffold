@@ -38,8 +38,9 @@ Different collections may own different assets in a root, never silently the sam
 asset. Several aliases of a path are one physical target, not extra installations.
 
 For distribution, resolve all requested machine/agent consumers, group by verified
-physical root, and prepare one write plan per root. Each consumer verifies its own
-host behavior; it does not reinstall identical bytes. Separate machines retain
+physical root, and prepare one write plan per root. The machine executor
+verifies each consumer's actual host behavior through supported local interfaces;
+separate LLM runs and repeated installation of identical bytes are unnecessary. Separate machines retain
 independent physical installs, credentials, hashes, backups and outcomes. A broken
 consumer does not prevent already-supported consumers from receiving safe updates.
 Deduplication does not claim that every consumer loaded the shared result.

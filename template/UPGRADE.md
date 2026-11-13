@@ -95,3 +95,13 @@ sync skills must refuse that version instead of writing duplicate file copies.
 Native caches remain owned by their managers; the guarded file installer is not
 extended to execute package commands. These local registration changes and actual
 host validation are separate from upgrading the instance's source documents.
+
+## Development and machine-execution upgrade
+
+Include the new portable develop-agent-skill and the sync skill's
+machine-execution reference in the reviewed source upgrade. Vendor authoring
+helpers remain optional and are not copied into an instance. A machine executor
+can manage the selected client profiles through supported interfaces; consumer
+ownerId and installed baselines do not need rewriting. Preserve any explicit
+executor/owner restriction and existing permissions. This source upgrade does
+not create schedules, launch fleet workers or migrate production clients.

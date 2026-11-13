@@ -28,6 +28,11 @@ which targets to include. Resolve and record the actual fleet as described in
 workflows.md; this target default does not expand the selected asset set or grant
 credential changes, host repair or other unrelated effects.
 
+For setup or pull, use one authorized executor per machine/user context to
+manage the selected local clients. Read [machine-execution.md](references/machine-execution.md)
+for local execution, fleet packets and reports. Client-specific configuration and
+loading evidence do not require a separate LLM session for every client.
+
 Read [workflows.md](references/workflows.md) for the selected operation,
 [local-state.md](references/local-state.md) for registry/policy/receipts, and
 [git-access.md](references/git-access.md) before setup or Git network operations.
@@ -59,8 +64,9 @@ is not sharing permission. Preserve other instances and their physical ownership
 
 Identify actual OS/shell, client/version, host and selected physical targets.
 Reuse applicable prior documentation/evidence; recheck changed capability facts.
-Missing provider or supported loader means a per-target limitation, not guessed
-paths or a substituted client. Full installation accounts for all selected
+A missing authorized executor or supported loader is a per-target limitation,
+not guessed paths or a substituted model. A consumer model/provider need not run
+when its supported local management/discovery interface suffices. Full installation accounts for all selected
 categories and necessary companions, not just this bootstrap skill.
 
 Bind full canonical and external commit IDs, or an explicitly approved complete

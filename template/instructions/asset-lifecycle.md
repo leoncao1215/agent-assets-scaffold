@@ -3,6 +3,11 @@
 Optional supplement, applied only at the user's approved scope. It does not
 authorize publication, schedule creation or changes to credentials/permissions.
 
+For an explicitly selected collection-owned skill development task, use
+`develop-agent-skill` when available to manage source, companions, packaging and
+validation. It does not depend on a vendor's authoring skill. If unavailable,
+follow the collection contracts and retain this bounded completion check.
+
 After creating or modifying a reusable skill, instruction supplement, MCP
 description or preference asset, check only the task's known changed content:
 

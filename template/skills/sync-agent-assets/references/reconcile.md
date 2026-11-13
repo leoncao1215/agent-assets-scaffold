@@ -24,11 +24,15 @@ substitution. Registered ownership and capability evidence can be reused; new
 targets still need verified physical ownership and supported loading. The default
 fleet selector does not permit reading unrelated private content or other collections.
 
-Each selected agent owns its client-exclusive installation scope. One coordinating
-owner handles each shared physical directory/configuration section, including
-aliases or mounts referring to the same target. Resolve overlaps before dependent
-writes. Different source repositories do not isolate shared user skill directories.
-Do not silently edit another client's settings merely because they are writable.
+One authorized machine/user executor manages the selected local client scopes
+through their supported interfaces; see [machine-execution.md](machine-execution.md).
+Client/profile ownership remains separate, but it does not require that client's
+model to execute the installation. Keep one writer for each physical directory
+or shared configuration section, including aliases/mounts of the same target.
+Resolve overlaps before writes. Different collections do not isolate shared user
+skill roots. Writable settings alone do not authorize managing an unselected
+client; reuse task/policy authority for the selected clients without repeated
+per-provider permission or delegation.
 For native packages/catalogs, keep the manager as the sole cache writer and
 follow [native-distribution.md](native-distribution.md); file locks do not protect
 its processes or background refresh. Preserve registered methods on routine pull.
@@ -47,7 +51,9 @@ matching executor, report a manual/blocked target; do not install an orchestrato
 switch providers or invent transport. Source access failures affect dependent
 targets only, not unrelated installations.
 
-A bounded delegate receives the verified collection, fixed canonical/external
+A normal fleet pull has one bounded worker per machine/user context, carrying
+all selected local clients; the coordinator can execute its own machine directly.
+A bounded worker receives the verified collection, fixed canonical/external
 commits, selected assets/companions, machine/client/physical ownership, mode and
 operation ID, baseline/policy evidence, allowed effects and expected results.
 It does not rediscover scope, ask already answered questions, delegate again,
@@ -56,7 +62,7 @@ conflicts, local record pointers and separate static/runtime evidence. Never
 send raw private configuration, credentials or other machines' installation state.
 
 For a coordinated pull, resolve source inputs once and distribute their identities;
-each owner retrieves/verifies them with its own registered access. Parallel work
+each machine executor retrieves/verifies them with its own registered access. Parallel work
 is allowed for non-overlapping targets. A failed, cancelled or unreachable target
 is neither synchronized nor a no-candidates result; report it and finish independent
 work. Follow cancellation to termination before replacing a potential writer.

@@ -4,7 +4,7 @@ Create an independent repository for your agent skills, MCP descriptions,
 instruction supplements, and selected preferences. Keep work, personal, and
 other people's collections separate while reusing the same management workflow.
 
-The scaffold supplies conventions and an agent-readable sync skill. Each
+The scaffold supplies conventions and portable development/sync lifecycle skills. Each
 **instance** owns its actual assets and sources. Each **machine** keeps its own
 credentials, paths, adapted configuration, and installation records.
 
@@ -71,6 +71,11 @@ bounded standing policy. Named **contributions** publish independently; an
 **audit** reports drift without installation. A failing consumer does not block
 other targets or publication. Local contributions return only to that instance.
 Promoting reusable improvements to this scaffold is a separate task.
+The portable develop-agent-skill manages only collection-specific authoring,
+packaging and contribution; a vendor skill such as skill-creator is optional.
+Routine fleet pull uses one authorized executor per machine/user context for
+its selected local clients, keeping profile ownership and verification separate.
+It does not require one LLM session per consumer.
 
 The generic setup contract prefers repository-scoped deploy keys where supported,
 with the user granting read/write access to the public key. It does not silently
